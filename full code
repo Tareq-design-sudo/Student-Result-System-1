@@ -1,0 +1,73 @@
+public class Main {
+    public static void main(String[] args) {
+
+        Student s1 = new ScienceStudent("Tareq", 101, 4.5, 4.0, 5.0);
+        Student s2 = new CommerceStudent("Nihad", 102, 3.5, 4.0, 3.8);
+
+        ResultProcessor rp = new ResultProcessor();
+
+        rp.showResult(s1);
+        rp.showResult(s2);
+    }
+}
+
+abstract class Student {
+    private String name;
+    private int roll;
+
+    public Student(String name, int roll) {
+        this.name = name;
+        this.roll = roll;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getRoll() {
+        return roll;
+    }
+
+    public abstract double calculateGPA();
+}
+
+class ScienceStudent extends Student {
+    private double physics, chemistry, math;
+
+    public ScienceStudent(String name, int roll, double p, double c, double m) {
+        super(name, roll);
+        this.physics = p;
+        this.chemistry = c;
+        this.math = m;
+    }
+
+    @Override
+    public double calculateGPA() {
+        return (physics + chemistry + math) / 3;
+    }
+}
+
+class CommerceStudent extends Student {
+    private double accounting, business, economics;
+
+    public CommerceStudent(String name, int roll, double a, double b, double e) {
+        super(name, roll);
+        this.accounting = a;
+        this.business = b;
+        this.economics = e;
+    }
+
+    @Override
+    public double calculateGPA() {
+        return (accounting + business + economics) / 3;
+    }
+}
+
+class ResultProcessor {
+    public void showResult(Student s) {
+        System.out.println("Name: " + s.getName());
+        System.out.println("Roll: " + s.getRoll());
+        System.out.println("GPA: " + s.calculateGPA());
+        System.out.println("----------------------");
+    }
+}
