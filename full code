@@ -1,18 +1,23 @@
+
 public class Main {
     public static void main(String[] args) {
 
         Student s1 = new ScienceStudent("Tareq", 101, 3.5, 3.0, 3.0);
         Student s2 = new CommerceStudent("Nihad", 102, 3.5, 4.0, 3.8);
+        Student s3 = new ArtsStudent("Rafi", 103, 3.2, 3.4, 3.6);
+        Student s4 = new EngineeringStudent("Sadia", 104, 3.9, 3.8, 4.0, 3.7);
 
         ResultProcessor rp = new ResultProcessor();
 
         rp.showResult(s1);
         rp.showResult(s2);
+        rp.showResult(s3);
+        rp.showResult(s4);
     }
 }
 
 abstract class Student {
-    private String name;
+    private String name; 
     private int roll;
 
     public Student(String name, int roll) {
@@ -29,8 +34,16 @@ abstract class Student {
     }
 
     public abstract double calculateGPA();
-}
 
+    public String getGrade() {
+        double gpa = calculateGPA();
+        if (gpa >= 3.75) return "A+";
+        else if (gpa >= 3.50) return "A";
+        else if (gpa >= 3.00) return "B";
+        else if (gpa >= 2.50) return "C";
+        else return "F";
+    }
+}
 class ScienceStudent extends Student {
     private double physics, chemistry, math;
 
@@ -41,7 +54,7 @@ class ScienceStudent extends Student {
         this.math = m;
     }
 
-    @Override
+   
     public double calculateGPA() {
         return (physics + chemistry + math) / 3;
     }
@@ -57,17 +70,49 @@ class CommerceStudent extends Student {
         this.economics = e;
     }
 
-    @Override
+  
     public double calculateGPA() {
         return (accounting + business + economics) / 3;
     }
 }
 
+class ArtsStudent extends Student {
+    private double history, literature, sociology;
+
+    public ArtsStudent(String name, int roll, double h, double l, double s) {
+        super(name, roll);
+        this.history = h;
+        this.literature = l;
+        this.sociology = s;
+    }
+    public double calculateGPA() {
+        return (history + literature + sociology) / 3;
+    }
+}
+
+class EngineeringStudent extends Student {
+    private double programming, dataStructures, algorithms, electronics;
+
+    public EngineeringStudent(String name, int roll, double pr, double ds, double al, double el) {
+        super(name, roll);
+        this.programming = pr;
+        this.dataStructures = ds;
+        this.algorithms = al;
+        this.electronics = el;
+    }
+
+   
+    public double calculateGPA() {
+        return (programming + dataStructures + algorithms + electronics) / 4;
+    }
+}
 class ResultProcessor {
     public void showResult(Student s) {
         System.out.println("Name: " + s.getName());
         System.out.println("Roll: " + s.getRoll());
-        System.out.println("GPA: " + s.calculateGPA());
+        System.out.println("GPA: " + String.format("%.2f", s.calculateGPA()));
+        System.out.println("Grade: " + s.getGrade());
         System.out.println("----------------------");
     }
 }
+
